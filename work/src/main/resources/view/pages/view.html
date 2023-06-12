@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!--    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />-->
+<!--    <link th:href="@{/layui/css/view.css}" rel="stylesheet" />-->
+    <link rel="stylesheet" th:href="@{/layuimini-v2/lib/layui-v2.6.3/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuimini-v2/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuimini-v2/css/public.css}" media="all">
+<!--    <script th:src="@{/layui/layui.all.js}"></script>-->
+<!--    <script th:src="@{/jquery/jquery-2.1.4.min.js}"></script>-->
+    <style>
+        .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
+        .icon {margin-right:10px;color:#1aa094;}
+        .icon-cray {color:#ffb800!important;}
+        .icon-blue {color:#1e9fff!important;}
+        .icon-tip {color:#ff5722!important;}
+        .layuimini-qiuck-module {text-align:center;margin-top: 10px}
+        .layuimini-qiuck-module a i {display:inline-block;width:100%;height:60px;line-height:60px;text-align:center;border-radius:2px;font-size:30px;background-color:#F8F8F8;color:#333;transition:all .3s;-webkit-transition:all .3s;}
+        .layuimini-qiuck-module a cite {position:relative;top:2px;display:block;color:#666;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:14px;}
+        .welcome-module {width:100%;height:210px;}
+        .panel {background-color:#fff;border:1px solid transparent;border-radius:3px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+        .panel-body {padding:10px}
+        .panel-title {margin-top:0;margin-bottom:0;font-size:12px;color:inherit}
+        .label {display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em;margin-top: .3em;}
+        .layui-red {color:red}
+        .main_btn > p {height:40px;}
+        .layui-bg-number {background-color:#F8F8F8;}
+        .layuimini-notice:hover {background:#f6f6f6;}
+        .layuimini-notice {padding:7px 16px;clear:both;font-size:12px !important;cursor:pointer;position:relative;transition:background 0.2s ease-in-out;}
+        .layuimini-notice-title,.layuimini-notice-label {
+            padding-right: 70px !important;text-overflow:ellipsis!important;overflow:hidden!important;white-space:nowrap!important;}
+        .layuimini-notice-title {line-height:28px;font-size:14px;}
+        .layuimini-notice-extra {position:absolute;top:50%;margin-top:-8px;right:16px;display:inline-block;height:16px;color:#999;}
+    </style>
+    <title></title>
+</head>
+<body class="layui-view-body">
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md8">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-warning icon"></i>数据统计</div>
+                            <div class="layui-card-body">
+                                <div class="welcome-module">
+                                    <div class="layui-row layui-col-space10">
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-blue">昨日</span>
+                                                        <h5>新增确诊</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins">200</h1>
+                                                        <small>截止今日早晨8：00</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-cyan">昨日</span>
+                                                        <h5>新增无症状</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins">19000</h1>
+                                                        <small>截止今日早晨8：00</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-orange">昨日</span>
+                                                        <h5>新增死亡</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins">2</h1>
+                                                        <small>截止今日早晨8：00</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-green">昨日</span>
+                                                        <h5>新增痊愈</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins">124</h1>
+                                                        <small>截止今日早晨8：00</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>报表统计</div>
+                            <div class="layui-card-body">
+                                <div id="echarts-records" style="width: 100%;min-height:500px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md4">
+
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>疫情新闻</div>
+                    <div class="layui-card-body layui-text">
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">关于进一步优化新冠肺炎疫情防控措施 科学精准做好防控工作的通知》解读问答</div>
+                            <div class="layuimini-notice-extra"> 2022-11-13 </div>
+                            <div class="layuimini-notice-content layui-hide">
+                                一、《关于进一步优化新冠肺炎疫情防控措施 科学精准做好防控工作的通知》出台的背景是什么？
+                                <br>
+                                当前，新冠病毒仍在持续变异，全球疫情仍处于流行态势，国内新发疫情不断出现。我国是人口大国，脆弱人群数量多，地区发展不平衡，医疗资源总量不足，一些地区的疫情还有一定规模。受病毒变异和冬春季气候因素影响，疫情传播范围和规模有可能进一步扩大，防控形势仍然严峻复杂，必须保持战略定力，科学精准做好疫情防控各项工作。为适应疫情防控的新形势和新冠病毒变异的新特点，坚持既定的疫情防控总策略和总方针，更加科学精准开展防控工作，高效统筹疫情防控和经济社会发展，国务院应对新型冠状病毒肺炎疫情联防联控机制综合组组织专家，对现行的隔离转运、核酸检测、人员流动、医疗服务、疫苗接种、服务保障企业和校园等疫情防控、滞留人员疏解等方面措施进行了研究论证，提出了进一步优化调整的建议。11月10日，中央政治局常委会召开会议，听取新冠肺炎疫情防控工作汇报，研究部署进一步优化防控工作的二十条措施。
+                                <br>
+                                二、《通知》对风险人员的隔离管理期限和方式有什么优化和调整？
+                                <br>
+                                《通知》明确对密切接触者管理措施调整为“5天集中隔离+3天居家隔离”，不再判定密接的密接，将高风险区外溢人员管理措施调整为“7天居家隔离”，将结束闭环作业的高风险岗位从业人员管理措施调整为“5天居家健康监测”。不具备居家隔离条件者可进行集中隔离。在居家隔离期间要赋码管理，本人和共同居住人员严格做到不外出。居家健康监测期间要严格落实非必要不外出、及时核酸检测等要求。
+                                <br>
+                                三、《通知》对于风险区域的划定进行了哪些调整，出于怎样的考虑？
+                                <br>
+                                此次措施优化将风险区由“高、中、低”三类调整为“高、低”两类，原则上将感染者居住地以及活动频繁且疫情传播风险较高的工作地和活动地等区域划定为高风险区，一般以单元、楼栋为单位划定，在科学精准管控风险区域的前提下，最大限度减少管控范围和人员。在疫情传播风险不明确或存在广泛社区传播的情况下，要适度扩大高风险区划定范围。高风险区连续5天未发现新增感染者，降为低风险区，符合解封条件的高风险区要及时解封。
+                                <br>
+                                四、《通知》对于外防输入措施有何优化？主要出于哪些考虑？
+                                <br>
+                                结合全球疫情形势发展变化，为更好地统筹疫情外防输入和国际交往，便于人员往来，取消入境航班熔断机制，登机前48小时内2次核酸检测阴性证明调整为登机前48小时内1次核酸检测阴性证明。调整入境人员阳性判定标准，入境人员隔离期限调整为“5天集中隔离+3天居家隔离”。参照北京冬奥会、成都世乒赛等疫情防控经验，对于入境重要商务人员、体育团组等设立免隔离闭环管理区（“闭环泡泡”）。对免隔离闭环管理区内的外方和中方人员严格落实闭环管理、个人防护、核酸检测等要求，严防“破环”。
+                                <br>
+                                五、《通知》重点突出了企业、学校、养老院、精神专科医院、福利院等场所的疫情防控，主要考虑是什么？
+                                <br>
+                                奥密克戎变异株传播速度更快、隐匿性更强，企业、学校、养老院、精神专科医院、福利院等重点机构人员密集，特别是老年人等脆弱人群抵抗力较弱，一旦有感染者传入极易造成聚集性疫情，疫情处置难度大。《通知》对重点场所疫情防控提出了明确要求，要求“一企一策”“一园一策”制定疫情防控处置预案，落实防控主体责任；提升学校疫情应急处置能力，支持学校以快制快处置疫情；优化对养老院、精神专科医院、福利院等脆弱人群集中场所的管理。
+                                <br>
+                                六、《通知》对医疗救治、疫苗接种和药物储备等方面，有哪些要求？
+                                <br>
+                                《通知》要求制定分级分类诊疗方案，做好医务人员全员培训，做好住院床位和重症床位准备，增加救治资源。加快提高疫苗加强免疫接种覆盖率，特别是老年人群加强免疫接种覆盖率。做好药物供应储备，满足患者用药需求，尤其是重症高风险和老年患者治疗需求，做好有效中医药方药的储备。
+                                <br>
+                                七、《通知》对整治层层加码问题提出了哪些新的要求？
+                                <br>
+                                为保障社会正常生产生活秩序，《通知》明确要求，各地严禁随意封校停课、停工停产、未经批准阻断交通、随意采取“静默”管理、随意封控、长时间不解封、随意停诊等各类层层加码行为，加大通报、公开曝光力度，对造成严重后果的依法依规严肃追责。对于没有发生疫情的地区，要严格按照第九版防控方案确定的范围对风险岗位、重点人员开展核酸检测，既不能随意扩大核酸检测范围，也不能随意扩大人员管控、社区封控、隔离转运范围。纠正“一天两检”、“一天三检”等不科学做法。疫情发生地要分类有序做好外地滞留人员疏解，目的地不得拒绝接受滞留人员返回，既要避免疫情外溢，也不得加码管控。
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">[新华社] 中共中央政治局常务委员会召开会议 听取新冠肺炎疫情防控工作汇报 研究部署进一步优化防控工作的二十条措施 中共中央总书记习近平主持会议</div>
+                            <div class="layuimini-notice-extra"> 2022-11-10 </div>
+                            <div class="layuimini-notice-content layui-hide">
+                                新华社北京11月10日电 中共中央政治局常务委员会11月10日召开会议，听取新冠肺炎疫情防控工作汇报，研究部署进一步优化防控工作的二十条措施。中共中央总书记习近平主持会议并发表重要讲话。
+                                <br>
+                                会议指出，当前，新冠病毒仍在持续变异，全球疫情仍处于流行态势，国内新发疫情不断出现。我国是人口大国，脆弱人群数量多，地区发展不平衡，医疗资源总量不足，一些地区的疫情还有一定规模。受病毒变异和冬春季气候因素影响，疫情传播范围和规模有可能进一步扩大，防控形势仍然严峻，必须保持战略定力，科学精准做好疫情防控各项工作。
+                                <br>
+                                会议强调，要完整、准确、全面贯彻落实党中央决策部署，坚定不移坚持人民至上、生命至上，坚定不移落实“外防输入、内防反弹”总策略，坚定不移贯彻“动态清零”总方针，按照疫情要防住、经济要稳住、发展要安全的要求，高效统筹疫情防控和经济社会发展，最大程度保护人民生命安全和身体健康，最大限度减少疫情对经济社会发展的影响。
+                                <br>
+                                会议指出，要适应病毒快速传播特点，切实落实“四早”要求，以快制快，避免战线扩大、时间延长。要集中力量打好重点地区疫情歼灭战，采取更为坚决、果断措施攻坚，尽快遏制疫情扩散蔓延，尽快恢复正常生产生活秩序，决不能等待观望、各行其是。要坚持科学精准防控，提高防疫工作的有效性，准确分析疫情风险，进一步优化调整防控措施，在隔离转运、核酸检测、人员流动、医疗服务、疫苗接种、服务保障企业和校园等疫情防控、滞留人员疏解等方面采取更为精准的举措。要大力推进疫苗、药物研发，提高疫苗、药物有效性和针对性。要在落实各项防疫举措的同时加强分析研判，必要的防疫举措不能放松，既要反对不负责任的态度，又要反对和克服形式主义、官僚主义，纠正“层层加码”、“一刀切”等做法。要全力做好人民群众生产生活服务保障，切实满足疫情处置期间群众基本生活需求，保障看病就医等基本民生服务，加大对老弱病残等特殊群体的关心帮助力度，解决好人民群众实际困难，尽力维护正常生产工作秩序。要做好重点人群疫苗接种等工作，筑牢疫情防控屏障。
+                                <br>
+                                会议强调，各级党委和政府要把思想和行动统一到党中央决策部署上来，充分认识抗疫斗争的复杂性、艰巨性、反复性，强化责任担当，增强斗争本领，守土有责、守土尽责，深入基层、深入一线，抓实抓细疫情防控各项工作，做好思想引导和心理疏导，坚决打赢常态化疫情防控攻坚战。
+                                <br>
+                                会议还研究了其他事项。
+                                <br>
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">国家疾控局发布2022年8月全国法定传染病疫情概况</div>
+                            <div class="layuimini-notice-extra">2022-09-30</div>
+                            <div class="layuimini-notice-content layui-hide">
+                                2022年8月（2022年8月1日0时至8月31日24时），全国（不含香港、澳门特别行政区和台湾地区，下同）共报告法定传染病658201例，死亡2568人。
+                                <br>
+                                其中，甲类传染病中霍乱报告发病6例，无死亡病例报告。乙类传染病中传染性非典型肺炎、脊髓灰质炎、人感染高致病性禽流感、白喉和人感染H7N9禽流感无发病、死亡报告，其余22种乙类传染病共报告发病308822例，报告死亡2565人。报告发病数居前5位的病种依次为病毒性肝炎、肺结核、梅毒、新型冠状病毒肺炎以及淋病，占乙类传染病报告病例总数的92%。8月1日0时至8月31日24时，全国31个省（自治区、直辖市）和新疆生产建设兵团报告新型冠状病毒肺炎确诊病例13855例，无死亡病例报告。
+                                <br>
+                                同期，丙类传染病共报告发病349373例，报告3人死亡。报告发病数居前3位的病种依次为流行性感冒、其他感染性腹泻病和手足口病，占丙类传染病报告病例总数的97％。
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">孙春兰在海南调研时强调 乘势而上早日实现社会面清零</div>
+                            <div class="layuimini-notice-extra"> 2022-08-21 </div>
+                            <div class="layuimini-notice-content layui-hide">
+                                为深入贯彻习近平总书记重要指示，落实党中央、国务院决策部署，中共中央政治局委员、国务院副总理孙春兰13日至21日在海南调研指导疫情防控工作，深入三亚市、乐东县、陵水县、海口市的防控指挥部、重点社区、关键点位，多次视频调度，实施攻坚行动，调集各方资源加大支持，推动第九版防控措施加快落地，高效有序组织16.3万名滞留旅客返程，疫情防控各项工作取得重要成效。目前海南疫情已出现拐点，每日新增感染者数量持续下降，三亚疫情传播指数Rt值降到0.9，主要传播链基本阻断，疫情较重市县中的陵水、临高已经社会面清零，全省疫情防控总体可控、稳中向好。
+                                <br>
+                                孙春兰指出，当前海南疫情防控正处于关键期，需要进一步统筹资源力量，突出重点、拔点攻坚、速战速胜。要分级分类精准施策，优化核酸检测策略，疫情较重地区要加密筛查，加大密接判定和隔离力度，尽快捞净管控风险人员、实现社会面清零，没有疫情的市县要加强区域联防协查，严防疫情输入。要坚持以快制快，压流程、简环节，提高检测、追阳、转运、流调、出院的效率。要及时动态调整小区管控措施，对多轮筛查没有病例的小区，该降级的降级，该解封的解封，创建无疫小区、无疫村镇，调动群防群控的积极性。要严格管控风险点位，加强隔离点、定点医院、方舱医院和医疗机构卫生监督，严防发生交叉感染。要毫不放松抓好常态化疫情防控，指挥体系始终保持激活状态，压实重点场所的防控责任，研究完善渔港、渔民、渔市防控措施，加强监测预警，做到早预防、快处置，防止疫情输入扩散。要加强公共卫生体系建设，充实基层防控力量，加强干部政策培训，提高信息化建设水平，夯实疫情防控的基层基础。
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">关于印发《新冠肺炎疫情防控核酸检测实施办法》等4个文件的通知</div>
+                            <div class="layuimini-notice-extra"> 2022-11-21 </div>
+                            <div class="layuimini-notice-content layui-hide">
+                                各省、自治区、直辖市及新疆生产建设兵团应对新型冠状病毒肺炎疫情联防联控机制（领导小组、指挥部），国务院应对新型冠状病毒肺炎疫情联防联控机制各成员单位：
+                                <br>
+                                为进一步指导各地各部门做好新冠肺炎疫情防控工作，根据《新型冠状病毒肺炎防控方案（第九版）》《关于进一步优化新冠肺炎疫情防控措施科学精准做好防控工作的通知》有关要求，国务院联防联控机制综合组制定了《新冠肺炎疫情防控核酸检测实施办法》《新冠肺炎疫情风险区划定及管控方案》《新冠肺炎疫情居家隔离医学观察指南》《新冠肺炎疫情居家健康监测指南》。现印发给你们，请认真组织实施。各地各部门在执行过程中如有相关建议，请及时反馈国务院联防联控机制综合组。
+                            </div>
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title">新冠病毒疫苗接种情况</div>
+                            <div class="layuimini-notice-extra"> 2022-11-25 </div>
+                            <div class="layuimini-notice-content layui-hide">
+                                截至2022年11月24日，31个省（自治区、直辖市）和新疆生产建设兵团累计报告接种新冠病毒疫苗344297.6万剂次。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-fire icon"></i>版本信息</div>
+                    <div class="layui-card-body layui-text">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="100">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td>应用系统</td>
+                                <td>
+                                    Windows 10
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>内存大小</td>
+                                <td>8G</td>
+                            </tr>
+                            <tr>
+                                <td>存储空间</td>
+                                <td>512G</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-paper-plane-o icon"></i>管理员</div>
+                    <div class="layui-card-body layui-text layadmin-text">
+                        <p>ZYD</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{'/layuimini-v2/lib/layui-v2.6.3/layui.js'}" charset="utf-8"></script>
+<script th:src="@{'/layuimini-v2/js/lay-config.js'}" charset="utf-8"></script>
+<script>
+    layui.use(['layer', 'miniTab','echarts'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            echarts = layui.echarts;
+
+        miniTab.listen();
+
+        /**
+         * 查看公告信息
+         **/
+        $('body').on('click', '.layuimini-notice', function () {
+            var title = $(this).children('.layuimini-notice-title').text(),
+                noticeTime = $(this).children('.layuimini-notice-extra').text(),
+                content = $(this).children('.layuimini-notice-content').html();
+            var html = '<div style="padding:15px 20px; text-align:justify; line-height: 22px;border-bottom:1px solid #e2e2e2;background-color: #2f4056;color: #ffffff">\n' +
+                '<div style="text-align: center;margin-bottom: 20px;font-weight: bold;border-bottom:1px solid #718fb5;padding-bottom: 5px"><h4 class="text-danger">' + title + '</h4></div>\n' +
+                '<div style="font-size: 12px">' + content + '</div>\n' +
+                '</div>\n';
+            parent.layer.open({
+                type: 1,
+                title: '系统公告'+'<span style="float: right;right: 1px;font-size: 12px;color: #b1b3b9;margin-top: 1px">'+noticeTime+'</span>',
+                area: '1200px;',
+                shade: 0.8,
+                id: 'layuimini-notice',
+                btn: ['查看', '取消'],
+                btnAlign: 'c',
+                moveType: 1,
+                content:html,
+                success: function (layero) {
+                    var btn = layero.find('.layui-layer-btn');
+                    btn.find('.layui-layer-btn0').attr({
+                        href: 'http://127.0.0.1:8080/',
+                        target: '_blank'
+                    });
+                }
+            });
+        });
+
+        /**
+         * 报表功能
+         */
+        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+        var optionRecords = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['城市1','城市2', '城市3' , '城市4', '城市5']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一','周二','周三','周四','周五','周六','周日']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name:'城市1',
+                    type:'line',
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'城市2',
+                    type:'line',
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'城市3',
+                    type:'line',
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'城市4',
+                    type:'line',
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name:'城市5',
+                    type:'line',
+                    data:[820, 932, 901, 934, 1290, 1330, 1320]
+                }
+            ]
+        };
+        echartsRecords.setOption(optionRecords);
+
+        // echarts 窗口缩放自适应
+        window.onresize = function(){
+            echartsRecords.resize();
+        }
+    });
+</script>
+
+</body>
+</html>

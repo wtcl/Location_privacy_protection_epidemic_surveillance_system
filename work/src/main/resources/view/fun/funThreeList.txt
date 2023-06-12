@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+    <link th:href="@{/layui/css/view.css}" rel="stylesheet" />
+    <script th:src="@{/layui/layui.all.js}"></script>
+    <script th:src="@{/jquery/jquery-2.1.4.min.js}"></script>
+    <script th:src="@{/js/echarts.min.js}"></script>
+    <script th:src="@{/js/echarts-graph-modularity.js}"></script>
+    <title></title>
+</head>
+<body class="layui-view-body">
+<div class="layui-content">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                <i class="layui-icon mr5">&#xe66f;</i>现有感染者疫情溯源
+            </div>
+            <div class="layui-card-body">
+                <div class="searchTable">
+                    感染者姓名：
+                    <div class="layui-inline mr30">
+                        <input class="layui-input" name="usernames" autocomplete="off">
+                    </div>
+                    <button class="layui-btn" lay-event="search" data-type="search">查询关系</button>
+                </div>
+            </div>
+            <div class="layui-col-md20">
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>图</div>
+                    <div class="layui-card-body">
+                        <div id="main" style="width: 100%;min-height:500px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var element = layui.element;
+    var layer = layui.layer;
+    var nodeData;
+    var edgeData;
+    var chart = echarts.init(document.getElementById('main'));
+    
+    function graph() {
+        nodeData = nodeData.map(function (nodeId) {
+            return {
+                name: nodeId,
+                id: nodeId + '',
+                value: 1
+            };
+        });
+
+        edgeData = edgeData.map(function (edge) {
+            return {
+                source: edge.source,
+                target: edge.target,
+                value: edge.weight
+            };
+        });
+
+        var itemStyle = {
+            normal: {
+                borderColor: '#fff',
+                borderWidth: 2
+            }
+        };
+
+        var lineStyle = {
+            normal: {
+                color: '#aaa',
+                width: 2
+            }
+        };
+
+        var labelStyle = {
+            normal: {
+                show: true
+            }
+        };
+
+        var forceStyle = {
+            normal: {
+                edgeLength: 1000
+            }
+        };
+
+        var option = {
+            // title: [{
+            //     text: 'Relationship Graph',
+            //     left: '25%',
+            //     top: '10%',
+            //     textAlign: 'center'
+            // }],
+            series: [{
+                name: 'Without Modularity',
+                type: 'graph',
+                layout: 'force',
+                itemStyle: itemStyle,
+                data: nodeData,
+                edges: edgeData,
+                left: 0,
+                top: 0,
+                width: '50%',
+                bottom: 0,
+                draggable: true,
+                symbolSize: 30,
+                lineStyle: lineStyle,
+                label: labelStyle,
+                force: forceStyle
+            }]
+        };
+
+        chart.setOption(option);
+    }
+    
+    active = {
+        search:function () {
+            $.ajax({
+                url : "[[@{/}]]relasearch",
+                data : {'usernames': $("input[name='usernames']").val()},
+                type : "post",
+                dataType : "json",
+                error : function(XMLHttpRequest, textStatus, data) {
+                    console.log(textStatus);
+                    errorHandle(data);
+                },
+                success : function(data) {
+                    console.log(data.data.node);
+                    console.log(data.data.edge);
+                    nodeData = data.data.node;
+                    edgeData = data.data.edge;
+                    graph();
+                }
+            });
+
+            // layer.open({
+            //     type: 2,
+            //     area: ['90%', '90%'],
+            //     title: '修改',
+            //     content: '[[@{http://127.0.0.1:8080/}]]'
+            // });
+
+        }
+    };
+
+    $('.layui-btn').on('click', function(){
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+    });
+
+    function errorHandle(data) {
+        if (data.status == 404) {
+            layer.msg("请求资源不存在", {icon: 2});
+        } else {
+            layer.msg("服务端异常", {icon: 2});
+        }
+        return;
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 16,
+    "data": [
+        { "roleId":"1", "roleName":"管理员", "roleDescription":"用于操纵系统" },
+        { "roleId":"2", "roleName":"主管", "roleDescription":"部门主管" },
+        { "roleId":"3", "roleName":"普通用户", "roleDescription":"普通查看" },
+        { "roleId":"4", "roleName":"测试", "roleDescription":"用于测试" },
+        { "roleId":"5", "roleName":"管理员2", "roleDescription":"" },
+        { "roleId":"6", "roleName":"管理员3", "roleDescription":"" }
+
+    ]
+}

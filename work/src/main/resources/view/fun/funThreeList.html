@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link th:href="@{/layui/css/layui.css}" rel="stylesheet" />
+  <link th:href="@{/layui/css/view.css}" rel="stylesheet" />
+  <script th:src="@{/layui/layui.all.js}"></script>
+  <script th:src="@{/jquery/jquery-2.1.4.min.js}"></script>
+  <script th:src="@{/js/echarts.min.js}"></script>
+  <script th:src="@{/js/echarts-dagre.js}"></script>
+  <title></title>
+</head>
+<body class="layui-view-body">
+<div class="layui-content">
+  <div class="layui-row">
+    <div class="layui-card">
+      <div class="layui-card-header">
+        <i class="layui-icon mr5">&#xe66f;</i>现有感染者疫情溯源
+      </div>
+      <div class="layui-card-body">
+        <div class="searchTable">
+          感染者姓名：
+          <div class="layui-inline mr30">
+            <input class="layui-input" name="usernames" autocomplete="off">
+          </div>
+          <button class="layui-btn" lay-event="search" data-type="search">查询关系</button>
+        </div>
+      </div>
+      <div class="layui-col-md20">
+        <div class="layui-card">
+          <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>感染关系图</div>
+          <div class="layui-card-body">
+            <div id="main" style="width: 100%;min-height: 500px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var element = layui.element;
+  var layer = layui.layer;
+  var nodeData;
+  var edgeData;
+  var chart = echarts.init(document.getElementById('main'));
+
+  function layuiLoading(){
+    layui.use(['layer'], function(){
+      index = layer.msg("loading...", {shade: [0.5, '#fff']});
+    });
+  }
+
+  function layuiRemoveLoading(){
+    layui.use(['layer'], function(){
+      var layer = layui.layer
+      layer.close(index);
+      //调用close方法,关闭全局变量index对应的加载效果
+    });
+  }
+
+  active = {
+    search:function () {
+      layuiLoading();
+      $.ajax({
+        url : "[[@{/}]]relasearch",
+        data : {'usernames': $("input[name='usernames']").val()},
+        type : "post",
+        dataType : "json",
+        error : function(XMLHttpRequest, textStatus, data) {
+          console.log(textStatus);
+          errorHandle(data);
+        },
+        success : function(data) {
+          console.log(data.data.node);
+          console.log(data.data.edge);
+          nodeData = data.data.node;
+          edgeData = data.data.edge;
+          nodeData = nodeData.map(function (nodeId) {
+            return {
+              name: nodeId
+            };
+          });
+          edgeData = edgeData.map(function (edge) {
+            return {
+              source: edge.source,
+              target: edge.target
+            };
+          });
+          var option = {
+            toolbox: {
+              feature: {
+                saveAsImage: {}
+              }
+            },
+            series : [
+              {
+                type: 'graph',
+                layout: 'dagre',
+                symbolSize: 20,
+                roam: true,
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'right'
+                  }
+                },
+                // edgeSymbol: ['circle', 'arrow'],
+                edgeSymbolSize: [4, 10],
+                edgeLabel: {
+                  normal: {
+                    textStyle: {
+                      fontSize: 20
+                    }
+                  }
+                },
+                data: nodeData,
+                links: edgeData
+              }
+            ]
+          };
+          chart.setOption(option);
+          layuiRemoveLoading();
+        }
+      });
+
+    }
+  };
+
+  $('.layui-btn').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+
+  function errorHandle(data) {
+    if (data.status == 404) {
+      layer.msg("请求资源不存在", {icon: 2});
+    } else {
+      layer.msg("服务端异常", {icon: 2});
+    }
+    return;
+  }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.cloud.dao.TracksMapper">
+    <select id="selectById" resultType="TracksInfo">
+        select * from dbdata where id=#{id}
+    </select>
+    <select id="selectByUuid" resultType="TracksInfo">
+        select * from dbdata where uuid=#{uuid};
+    </select>
+    <select id="selectOneMain" resultType="TracksInfo">
+        select t,x,y,tancid from dbdata where uuid in
+            <foreach collection="uuids" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </select>
+    <select id="selectOneSub" resultType="TracksInfo">
+        select uuid,x,y from dbdata where (t between #{t}-900 and <![CDATA[#{t}+900]]>)
+        and uuid not in
+         <foreach collection="uuids" index="index" item="uid" open="(" separator="," close=")">
+             #{uuids[${index}]}
+         </foreach>
+        <foreach collection="foundId" index="index" item="item1" open="and uuid not in (" separator="," close=")">
+            #{foundId[${index}]}
+        </foreach>
+        and (treeid in
+                <foreach collection="tancIds" index="index" item="item2" open="(" separator="," close=")">
+                #{tancIds[${index}]}
+                </foreach>
+         )
+    </select>
+    <select id="selectTwoMain" resultType="TracksInfo">
+        select * from dbdata where t=#{t}
+        <foreach collection="foundUuid" index="index" item="item1" open="and uuid not in (" separator="," close=")">
+            #{foundUuid[${index}]}
+        </foreach>
+        and treeid in
+        <foreach collection="treeIds" index="index" item="item1" open="(" separator="," close=")">
+        #{treeIds[${index}]}
+        </foreach>
+    </select>
+    <select id="selectThreeMain" resultType="TracksInfo">
+        select * from dbdata where (uuid=#{uuid})
+    </select>
+    <select id="selectThreeSub" resultType="TracksInfo">
+        select * from dbdata where
+        <foreach collection="uuids" index="index" item="item1" open="uuid in (" separator="," close=")">
+            #{uuids[${index}]}
+        </foreach>
+        and (t between #{t}-900 and <![CDATA[#{t}+900]]>)
+        and (treeid in
+        <foreach collection="tancIds" index="index" item="item2" open="(" separator="," close=")">
+            #{tancIds[${index}]}
+        </foreach>
+        )
+   </select>
+    <select id="selectByTreeId" resultType="TracksInfo">
+        select * from dbdata where treeid=#{treeId}
+    </select>
+    <insert id="insertTracks" parameterType="TracksInfo" keyProperty="id">
+        insert into dbdata (t, uuid, x, y, treeid, tancid) values (#{t}, #{uuid}, #{x}, #{y}, #{treeid}, #{tancid})
+    </insert>
+</mapper>
